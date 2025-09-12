@@ -1,0 +1,20 @@
+# Changes here will be overwritten by Copier
+_commit: 4.2.0
+_src_path: https://github.com/DiamondLightSource/python-copier-template.git
+author_email: urszula.neuman@diamond.ac.uk
+author_name: Urszula Neuman
+component_lifecycle: experimental
+component_owner: group:sscc
+component_type: service
+description: FastCS support for KDS Legato syringe pump
+distribution_name: fastcs-kds-legato
+docker: true
+docker_debug: true
+docs_type: sphinx
+git_platform: github.com
+github_org: DiamondLightSource
+package_name: fastcs_kds_legato
+pypi: true
+repo_name: fastcs-kds-legato
+strict_typing: true
+type_checker: pyright

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: fastcs-kds-legato
+  title: fastcs-kds-legato
+  description: FastCS support for KDS Legato syringe pump
+spec:
+  type: service
+  lifecycle: experimental
+  owner: group:default/beamline-controls
