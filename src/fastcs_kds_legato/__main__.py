@@ -1,24 +1,36 @@
 """Interface for ``python -m fastcs_kds_legato``."""
 
-from argparse import ArgumentParser
-from collections.abc import Sequence
+from typing import Optional
+
+import typer
 
 from fastcs_kds_legato import __version__
 
 __all__ = ["main"]
 
+app = typer.Typer()
 
-def main(args: Sequence[str] | None = None) -> None:
-    """Argument parser for the CLI."""
-    parser = ArgumentParser()
-    parser.add_argument(
-        "-v",
+
+def version_callback(value: bool):
+    if value:
+        typer.echo(__version__)
+        raise typer.Exit()
+
+
+@app.callback()
+def main(
+    # TODO: typer does not support `bool | None` yet
+    # https://github.com/tiangolo/typer/issues/533
+    version: Optional[bool] = typer.Option(  # noqa
+        None,
         "--version",
-        action="version",
-        version=__version__,
-    )
-    parser.parse_args(args)
+        callback=version_callback,
+        is_eager=True,
+        help="Print the version and exit",
+    ),
+):
+    pass
 
 
 if __name__ == "__main__":
-    main()
+    app()
