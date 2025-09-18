@@ -37,7 +37,7 @@ dev = [
 ]
 
 [project.scripts]
-fastcs-kds-legato = "fastcs_kds_legato.__main__:main"
+fastcs-kds-legato = "fastcs_kds_legato.__main__:app"
 
 [project.urls]
 GitHub = "https://github.com/DiamondLightSource/fastcs-kds-legato"

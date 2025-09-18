@@ -4,6 +4,18 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+         {
+            "name": "Kds Legato IOC",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "fastcs_kds_legato",
+            "justMyCode": false,
+            "console": "integratedTerminal",
+            "args": [
+                "ioc",
+                "LAB30-LEGATO",
+            ]
+        },
         {
             "name": "Debug Unit Test",
             "type": "debugpy",

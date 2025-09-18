@@ -3,8 +3,12 @@
 from typing import Optional
 
 import typer
+from fastcs.launch import FastCS
+from fastcs.transport.epics.ca.options import EpicsCAOptions
+from fastcs.transport.epics.options import EpicsIOCOptions
 
 from fastcs_kds_legato import __version__
+from fastcs_kds_legato.kds_legato_controller import KdsLegatoController
 
 __all__ = ["main"]
 
@@ -30,6 +34,20 @@ def main(
     ),
 ):
     pass
+
+
+@app.command()
+def ioc(pv_prefix: str = typer.Argument()):
+    # Create a controller instance
+    controller = KdsLegatoController()
+
+    # IOC options
+    options = EpicsCAOptions(ca_ioc=EpicsIOCOptions(pv_prefix=pv_prefix))
+
+    # ...and pass them both to FastCS
+    launcher = FastCS(controller, [options])
+    launcher.create_docs()
+    launcher.run()
 
 
 if __name__ == "__main__":
