@@ -1,11 +1,12 @@
 """Interface for ``python -m fastcs_kds_legato``."""
 
+from pathlib import Path
 from typing import Optional
 
 import typer
 from fastcs.launch import FastCS
 from fastcs.transport.epics.ca.options import EpicsCAOptions
-from fastcs.transport.epics.options import EpicsIOCOptions
+from fastcs.transport.epics.options import EpicsGUIOptions, EpicsIOCOptions
 
 from fastcs_kds_legato import __version__
 from fastcs_kds_legato.kds_legato_controller import KdsLegatoController
@@ -13,6 +14,8 @@ from fastcs_kds_legato.kds_legato_controller import KdsLegatoController
 __all__ = ["main"]
 
 app = typer.Typer()
+
+OPI_PATH = Path("/epics/opi")
 
 
 def version_callback(value: bool):
@@ -38,15 +41,22 @@ def main(
 
 @app.command()
 def ioc(pv_prefix: str = typer.Argument()):
+    ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
     # Create a controller instance
     controller = KdsLegatoController()
 
     # IOC options
-    options = EpicsCAOptions(ca_ioc=EpicsIOCOptions(pv_prefix=pv_prefix))
+    options = EpicsCAOptions(
+        ca_ioc=EpicsIOCOptions(pv_prefix=pv_prefix),
+        gui=EpicsGUIOptions(
+            output_path=ui_path / "kds_legato.bob", title=f"KDS_LEGATO - {pv_prefix}"
+        ),
+    )
 
     # ...and pass them both to FastCS
     launcher = FastCS(controller, [options])
     launcher.create_docs()
+    launcher.create_gui()
     launcher.run()
 
 
