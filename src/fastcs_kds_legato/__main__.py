@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional
 
 import typer
+from fastcs.connections import SerialConnectionSettings
 from fastcs.launch import FastCS
 from fastcs.transport.epics.ca.options import EpicsCAOptions
 from fastcs.transport.epics.options import EpicsGUIOptions, EpicsIOCOptions
@@ -42,8 +43,10 @@ def main(
 @app.command()
 def ioc(pv_prefix: str = typer.Argument()):
     ui_path = OPI_PATH if OPI_PATH.is_dir() else Path.cwd()
+
+    connection_settings = SerialConnectionSettings("192.168.1.6:7004", 460800)
     # Create a controller instance
-    controller = KdsLegatoController()
+    controller = KdsLegatoController(connection_settings)
 
     # IOC options
     options = EpicsCAOptions(
