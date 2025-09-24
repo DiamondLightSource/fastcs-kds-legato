@@ -65,6 +65,7 @@ filterwarnings = "error"
 testpaths = "docs src tests"
 
 [tool.coverage.run]
+patch = ["subprocess"]
 data_file = "/tmp/fastcs_kds_legato.coverage"
 
 [tool.coverage.paths]
